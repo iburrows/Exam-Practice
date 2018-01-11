@@ -1,0 +1,63 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Example_6"
+        xmlns:Converter="clr-namespace:Example_6.Converter" x:Class="Example_6.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525"
+        >
+    <Window.Resources>
+        <Converter:ValueToBrushConverter x:Key="ValueToBrushConverter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Path="Main" Source="{StaticResource Locator}"/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Filter (ID Type)" VerticalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="5">
+                <ComboBox Width="70" Height="20" ItemsSource="{Binding IdTypeList}" SelectedItem="{Binding SelectedIdType}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="190,0,0,0">
+                <Button Content="Act as Client" Width="70" Height="20" Command="{Binding ClientBtnClicked}"/>
+                <Button Content="Act as Server" Width="70" Height="20" Margin="10,0,0,0" Command="{Binding ServerBtnClicked}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" Margin="10" ItemsSource="{Binding PersonCollection}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Firstname" Width="*" Binding="{Binding Firstname}"/>
+                <DataGridTextColumn Header="Lastname" Width="*" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Age" Width="*" Binding="{Binding Age}"/>
+                <DataGridTextColumn Header="Id" Width="*" Binding="{Binding IdNumber}"/>
+                <DataGridTextColumn Header="Id Type" Width="*" Binding="{Binding IdType}" />
+                <DataGridTemplateColumn Header="Rating" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Ellipse Margin="0,2,0,2" Width="20" Height="20" Stroke="Black" Fill="{Binding Rating, Converter={StaticResource ValueToBrushConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Rating}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
