@@ -1,0 +1,62 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Example_7"
+        xmlns:Converters="clr-namespace:Example_7.Converters" x:Class="Example_7.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525"
+        >
+    <Window.Resources>
+        <Converters:IntToBrishConverter x:Key="IntToBrishConverter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Path="Main" Source="{StaticResource Locator}"/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Bottom" Margin="5,0,0,0">
+            <Label Content="Blueprints"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="1" Margin="5" DisplayMemberPath="Name" ItemsSource="{Binding BlueprintCollection}" SelectedItem="{Binding SelectedBlueprint}"/>
+
+        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Components" Grid.Row="0" />
+            <TextBox Width="170" Height="20" Grid.Column="1" Text="{Binding SelectedBlueprint.Components}"/>
+
+            <Label Content="Time" Grid.Row="1" />
+            <TextBox Width="170" Height="20" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedBlueprint.ReceivedTime, StringFormat=hh:mm}"/>
+
+            <Label Content="Amount" Grid.Row="2" />
+            <TextBox Width="170" Height="20" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedBlueprint.Amount}"/>
+
+            <Label Content="Completion Time" Grid.Row="3" />
+            <TextBox Width="170" Height="20" Grid.Row="3" Grid.Column="1" Text="{Binding SelectedBlueprint.CompletionTime, StringFormat=hh:mm}"/>
+
+            <Label Content="Rating" Grid.Row="4" />
+            <Ellipse Width="20" Height="20" Grid.Row="4" Grid.Column="1" Stroke="Black" HorizontalAlignment="Left" Margin="5,0,0,0" Fill="{Binding SelectedBlueprint.Rating, Converter={StaticResource IntToBrishConverter}, Mode=OneWay}"/>
+
+        </Grid>
+    </Grid>
+</Window>
