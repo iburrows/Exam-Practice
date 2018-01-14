@@ -8,6 +8,37 @@
         Title="MainWindow" Height="350" Width="525"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Margin="10" DisplayMemberPath="ShipId" ItemsSource="{Binding ShipCollection}" SelectedItem="{Binding SelectedShip}">
+            
+            
+        </ListBox>
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid ItemsSource="{Binding SelectedShip.ShipItem}" AutoGenerateColumns="True">
+                <!--<DataGrid.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" MinHeight="10" MinWidth="50">
+                            <Label Content="{Binding ItemCollection/Name}" Width="50" MinHeight="20" />
+                            <Label Content="{Binding ItemCollection/Amount}" Width="50" MinHeight="20"/>
+                            <Label Content="{Binding ItemCollection/Weight}" Width="50" MinHeight="20"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </DataGrid.Template>-->
+            </DataGrid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10">
+                <Label Content="Weight Sum: "/>
+                <TextBlock Width="100" Height="20" Text="{Binding SelectedShip.Sum}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
