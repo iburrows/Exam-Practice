@@ -23,6 +23,7 @@ namespace Example_9.ViewModel
         public string Amount { get; set; }
 
         BitmapImage image;
+        
 
         public static Random random = new Random();
 
@@ -61,6 +62,7 @@ namespace Example_9.ViewModel
                 else
                 {
                     int PosX = 10; ;
+                    bool MoveUp = false;
                     foreach (var item in Items)
                     {
                         if (item.Priority == priority && item.SelectedCategory == SelectedCategory)
@@ -70,9 +72,22 @@ namespace Example_9.ViewModel
                         else if (item.Priority < priority && item.SelectedCategory == SelectedCategory)
                         {
                             PosX = Math.Max(item.PosX, 0) + 140;
+                            MoveUp = true;
                         }
                     }
-                Items.Add(new ItemVM(image, SelectedCategory, Description, priority, Amount, GetRandomStatus(), PosX));
+                    Items.Add(new ItemVM(image, SelectedCategory, Description, priority, Amount, GetRandomStatus(), PosX));
+                    if (MoveUp)
+                    {
+
+                        for (int i = 0; i < Items.Count; i++)
+                        {
+                            if (Items[i].PosX == Items[i+1].PosX)
+                            {
+                                Items[i + 1].PosX += 140;
+                            }
+                        }
+                    }
+                
                 }
 
             });
