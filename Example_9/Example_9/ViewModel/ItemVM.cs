@@ -40,6 +40,18 @@ namespace Example_9.ViewModel
             SetXCoOrdinates(priority);
         }
 
+        public ItemVM(BitmapImage image, string selectedCategory, string description, int priority, string amount, string status, int posX) : this(image, selectedCategory, description, priority, amount, status)
+        {
+            Image = image;
+            SelectedCategory = selectedCategory;
+            Description = description;
+            Priority = priority;
+            Amount = amount;
+            Status = status;
+            SetYCoOrdinates(selectedCategory);
+            PosX = posX;
+        }
+
         private void SetXCoOrdinates(int priority)
         {
             switch (priority)
