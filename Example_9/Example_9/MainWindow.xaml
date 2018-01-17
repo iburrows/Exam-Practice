@@ -1,12 +1,172 @@
-﻿<Window x:Class="Example_9.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Example_9"
+        xmlns:Converters="clr-namespace:Example_9.Converters" x:Class="Example_9.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MainWindow" Height="440" Width="800"
+        >
+    <Window.Resources>
+        <Converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}" >
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Path="Main" Source="{StaticResource Locator}"/>
+    </Window.DataContext>
+    <Grid HorizontalAlignment="Left" Width="517">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid VerticalAlignment="Top" Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Category" Grid.Row="0"/>
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding CategoryList}" SelectedItem="{Binding SelectedCategory}"/>
+
+            <Label Content="Description" Grid.Row="1"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}"/>
+
+            <Label Content="Type" Grid.Row="2"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding TypeList}" SelectedItem="{Binding SelectedType}"/>
+
+            <Label Content="Priority" Grid.Row="3"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding PriorityList}" SelectedItem="{Binding SelectedPriority}"/>
+
+            <Label Content="Amount" Grid.Row="4"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Amount}"/>
+
+        </Grid>
+
+        <StackPanel VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Right">
+            <Button Content="Add" Width="50" Command="{Binding AddBtnClicked}"/>
+        </StackPanel>
+
+
+        <!--<Grid Grid.Column="1">-->
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>-->
+
+            <!--<ItemsControl Grid.Column="1" Margin="5" ItemsSource="{Binding EngineItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="5"   BorderThickness="2" Background="{Binding Status, Converter={StaticResource StatusToColorConverter}}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Content="{Binding Amount}" Grid.Row="1"/>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding Image}" Grid.Column="0"/>
+                                    <Grid Grid.Column="1">
+                                        <StackPanel Orientation="Vertical">
+                                            <Label Content="{Binding Description}"/>
+                                        <Label Content="{Binding Priority}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+            
+        </Grid>-->
         
+        <ItemsControl Grid.Column="1" Margin="5" ItemsSource="{Binding Items}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--<Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        
+                    </Grid>-->
+                    <Canvas></Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border CornerRadius="5"   BorderThickness="2" BorderBrush="{Binding Status, Converter={StaticResource StatusToColorConverter}}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="{Binding Amount}" Grid.Row="1" HorizontalAlignment="Center"/>
+
+                            <Grid Grid.Row="0" Width="120">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Image}" Width="40" Height="50" Grid.Column="0"/>
+                                <Grid Grid.Column="1">
+                                    <StackPanel Orientation="Vertical">
+                                        <!--desc and priority go here-->
+                                        <Label Content="{Binding Description}"/>
+                                        <Label Content="{Binding Priority}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="{Binding PosY, Mode=TwoWay}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding PosX, Mode=TwoWay}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+        
+        
+
     </Grid>
 </Window>
